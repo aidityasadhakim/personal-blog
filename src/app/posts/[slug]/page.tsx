@@ -26,8 +26,8 @@ export default async function Post({ params }: Params) {
         <article className="mb-32">
           <PostHeader
             title={post.title}
-            coverImage={post.coverImage}
-            date={post.date}
+            coverImage={post.banner}
+            date={post.createdAt}
             author={post.author}
           />
           <PostBody content={content} />
@@ -56,7 +56,7 @@ export function generateMetadata({ params }: Params): Metadata {
     title,
     openGraph: {
       title,
-      images: [post.ogImage.url],
+      // images: [post.ogImage.url],
     },
   };
 }

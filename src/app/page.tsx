@@ -1,5 +1,5 @@
 import Container from "@/app/components/container";
-import { LatestPost } from "@/app/components/latest-post";
+import { LatestPost } from "@/app/components/LatestPost";
 import { Intro } from "@/app/components/intro";
 import { MoreStories } from "@/app/components/more-stories";
 import { getAllPosts } from "@/lib/api";
@@ -17,8 +17,8 @@ export default function Index() {
         <Intro />
         <LatestPost
           title={latestPost.title}
-          coverImage={latestPost.coverImage}
-          date={latestPost.date}
+          coverImage={latestPost.banner}
+          date={latestPost.createdAt}
           author={latestPost.author}
           slug={latestPost.slug}
           excerpt={latestPost.excerpt}
