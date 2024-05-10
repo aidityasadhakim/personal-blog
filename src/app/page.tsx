@@ -15,14 +15,7 @@ export default function Index() {
     <main>
       <Container>
         <Intro />
-        <LatestPost
-          title={latestPost.title}
-          coverImage={latestPost.banner}
-          date={latestPost.createdAt}
-          author={latestPost.author}
-          slug={latestPost.slug}
-          excerpt={latestPost.excerpt}
-        />
+        <LatestPost />
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
       </Container>
     </main>

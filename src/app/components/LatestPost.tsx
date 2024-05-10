@@ -1,65 +1,56 @@
 import Avatar from "@/app/components/avatar";
 import CoverImage from "@/app/components/cover-image";
-import { type Author } from "@/interfaces/author";
 import Link from "next/link";
-// import DateFormatter from "./date-formatter";
 import Card from "./Card";
+import { getAllFilesFrontmatter } from "@/lib/mdx/mdx.server";
+import { Frontmatter } from "@/interfaces/Frontmatter";
+import clsx from "clsx";
 
-type Props = {
-  title: string;
-  coverImage: string;
-  date: string;
-  excerpt: string;
-  author: string;
-  slug: string;
+export const getData: any = async () => {
+  const post = await getAllFilesFrontmatter();
+
+  return post;
 };
 
-export function LatestPost({
-  title,
-  coverImage,
-  date,
-  excerpt,
-  author,
-  slug,
-}: Props) {
+export async function LatestPost() {
+  const postsFrontmatter = await getData();
+
   return (
-    <section>
-      {/* <div className="mb-8 md:mb-16">
-        <CoverImage title={title} src={coverImage} slug={slug} />
-      </div> */}
-      <h1 className="text-2xl md:text-3xl font-bold tracking-tighter leading-tight md:pr-8">
+    <section className="divide-y divide-gray-200">
+      <h1 className="text-2xl md:text-5xl font-bold tracking-tighter leading-tight md:pr-8 py-5">
         Latest 🆕
       </h1>
 
-      <section className="mt-5">
+      <section className="py-12">
         <ul className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          <li>
-            <Card>
-              Hi
-              {/* <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
-          <div>
-            <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
-              <Link href={`/posts/${slug}`} className="hover:underline">
-                {title}
-              </Link>
-            </h3>
-            <div className="mb-4 md:mb-0 text-lg">
-              <DateFormatter dateString={date} />
-            </div>
-          </div>
-          <div>
-            <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-            <Avatar name={author.name} picture={author.picture} />
-          </div>
-        </div> */}
-            </Card>
-          </li>
-          <li>
-            <Card>Hi</Card>
-          </li>
-          <li>
-            <Card>Hi</Card>
-          </li>
+          {postsFrontmatter.map((post: Frontmatter) => {
+            return (
+              <Card className="bg-gray-100">
+                <Link href={`/posts/${post.slug}`}>
+                  <div>
+                    <CoverImage
+                      title={post.title}
+                      src={post.banner}
+                      slug={post.slug}
+                    />
+                  </div>
+                  <div>
+                    <h3
+                      className={clsx(
+                        "text-2xl mt-3 font-bold leading-snug",
+                        "underline underline-offset-2 decoration-teal-400"
+                      )}
+                    >
+                      {post.title}
+                    </h3>
+                    <p className="text-lg leading-relaxed mb-4">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </Link>
+              </Card>
+            );
+          })}
         </ul>
       </section>
     </section>
