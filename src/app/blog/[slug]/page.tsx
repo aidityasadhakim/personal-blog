@@ -5,9 +5,9 @@ import { Mdx } from "@/components/mdx";
 import { Badge } from "@/components/ui/badge";
 
 interface PostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -16,8 +16,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function PostPage({ params }: PostPageProps) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+export default async function PostPage({ params }: PostPageProps) {
+  const resolvedParams = await params;
+  const post = allPosts.find(
+    (post) => post._raw.flattenedPath === resolvedParams.slug
+  );
 
   if (!post) {
     notFound();
